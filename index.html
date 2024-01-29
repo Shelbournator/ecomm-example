@@ -16,7 +16,7 @@
         header, footer { background: #f3f3f3; padding: 20px; text-align: center; }
         .product { display: inline-block; margin: 20px; }
         .product img { width: 150px; height: 150px; display: block; margin-bottom: 10px; }
-        .add-to-cart { background: #008cba; color: white; padding: 10px 20px; text-decoration: none; }
+        .add-to-cart { background: #008cba; color: white; padding: 10px 20px; text-decoration: none; cursor: pointer; }
     </style>
 </head>
 <body>
@@ -24,22 +24,7 @@
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PJ5LQNX5"
     height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <!-- End Google Tag Manager (noscript) -->
-    <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        var addToCartButtons = document.querySelectorAll('.add-to-cart');
 
-        addToCartButtons.forEach(function(button) {
-            button.addEventListener('click', function() {
-                var productId = this.id.replace('add-to-cart-product-', ''); // Extract product ID
-                window.dataLayer = window.dataLayer || [];
-                window.dataLayer.push({
-                    'event': 'addToCart',
-                    'product_id': 0123
-                });
-            });
-        });
-    });
-    </script>
     <header>
         <h1>My E-Commerce Site</h1>
         <nav>
@@ -51,12 +36,12 @@
         <div class="product">
             <img src="https://via.placeholder.com/150" alt="Product 1">
             <h2>Product 1</h2>
-            <a href="#" class="add-to-cart" id="add-to-cart-product-1">Add to Cart</a>
+            <button onclick="addToCart('P1')">Add to Cart</button>
         </div>
         <div class="product">
             <img src="https://via.placeholder.com/150" alt="Product 2">
             <h2>Product 2</h2>
-            <a href="#" class="add-to-cart" id="add-to-cart-product-2">Add to Cart</a>
+            <button onclick="addToCart('P2')">Add to Cart</button>
         </div>
         <!-- Add more products as needed -->
     </main>
@@ -65,5 +50,14 @@
         <p>&copy; 2024 My E-Commerce Site</p>
     </footer>
 
+    <script>
+    function addToCart(productId) {
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push({
+            'event': 'addToCart',
+            'product_id': productId
+        });
+    }
+    </script>
 </body>
 </html>
