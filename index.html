@@ -30,11 +30,11 @@
 
         addToCartButtons.forEach(function(button) {
             button.addEventListener('click', function() {
-                var productId = this.id.replace('add-to-cart-product-', ''); // Extract product ID
+                <! -- var productId = this.id.replace('add-to-cart-product-', ''); // Extract product ID  --> 
                 window.dataLayer = window.dataLayer || [];
                 window.dataLayer.push({
                     'event': 'addToCart',
-                    'product_id': productId
+                    'product_id': 0123
                 });
             });
         });
