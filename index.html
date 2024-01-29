@@ -1,6 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <script>
+    function addToCart(productId) {
+        console.log("Adding to cart:", productId); // This line is for debugging purposes
+        window.dataLayer.push({
+            'event': 'addToCart',
+            'product_id': productId
+        });
+    }
+    </script>
     <!-- Google Tag Manager -->
     <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
     new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -49,16 +58,5 @@
     <footer>
         <p>&copy; 2024 My E-Commerce Site</p>
     </footer>
-
-    <script>
-    function addToCart(productId) {
-        console.log("Adding to cart:", productId); // This line is for debugging purposes
-        window.dataLayer = window.dataLayer || [];
-        window.dataLayer.push({
-            'event': 'addToCart',
-            'product_id': productId
-        });
-    }
-    </script>
 </body>
 </html>
