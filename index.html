@@ -52,6 +52,7 @@
 
     <script>
     function addToCart(productId) {
+        console.log("Adding to cart:", productId); // This line is for debugging purposes
         window.dataLayer = window.dataLayer || [];
         window.dataLayer.push({
             'event': 'addToCart',
