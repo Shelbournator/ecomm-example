@@ -11,14 +11,14 @@
         });
     }
     function beginCheckout(checkoutItems) {
+        console.log("Adding to cart:", productId); // This line is for debugging purposes
         window.dataLayer.push({
-            'event':'beginCheckout',
+            'event': 'beginCheckout',
             'currency' : "USD",
-          'value' : 7.77,
-          'coupon' : "SUMMER_FUN",
-          'items' : checkoutItems
-});
-    console.log("Checkout initiated"); // For debugging
+            'value' : 7.77,
+            'coupon' : "SUMMER_FUN",
+            'items' : checkoutItems
+        });
     }
     </script>
     <!-- Google Tag Manager -->
@@ -81,8 +81,7 @@
         </div>
         <!-- Add more products as needed -->
         <div class="checkout-area">
-            <button onclick="beginCheckout( [
-                {
+            <button onclick="beginCheckout("
               item_id: "SKU_12345",
               item_name: "Stan and Friends Tee",
               affiliation: "Google Merchandise Store",
@@ -100,7 +99,7 @@
               item_variant: "green",
               location_id: "ChIJIQBpAG2ahYAR_6128GcTUEo",
               price: 9.99,
-              quantity: 1
+              quantity: 1"
                 }
         ]>Checkout</button>
         </div>
