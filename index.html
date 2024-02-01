@@ -6,14 +6,16 @@
     function addToCart(productId) {
         console.log("Adding to cart:", productId); // This line is for debugging purposes
         window.dataLayer.push({
-            'event': 'addToCart',
-            'product_id': productId
+            'event': 'add_to_cart',
+            'items': [
+                {
+                    product_id: productId
         });
     }
     function beginCheckout() {
         console.log("Begin checkout"); // This line is for debugging purposes
         window.dataLayer.push({
-            'event': 'beginCheckout',
+            'event': 'begin_checkout',
             'currency' : "USD",
             'value' : 7.77,
             'coupon' : "SUMMER_FUN",
