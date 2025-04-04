@@ -3,15 +3,21 @@
 <head>
     <script>
     window.dataLayer = window.dataLayer || [];
+    
+    // Function to track add_to_cart event
     function addToCart(productId) {
         console.log("Adding to cart:", productId); // This line is for debugging purposes
         window.dataLayer.push({
             'event': 'add_to_cart',
             'items': [
                 {
-                    product_id: productId
+                    'product_id': productId
+                }
+            ]
         });
     }
+
+    // Function to track begin_checkout event
     function beginCheckout() {
         console.log("Begin checkout"); // This line is for debugging purposes
         window.dataLayer.push({
@@ -20,30 +26,31 @@
             'value' : 7.77,
             'coupon' : "SUMMER_FUN",
             'items' : [
-                    {
-      item_id: "SKU_12346",
-      item_name: "Google Grey Women's Tee",
-      affiliation: "Google Merchandise Store",
-      coupon: "SUMMER_FUN",
-      discount: 3.33,
-      index: 1,
-      item_brand: "Google",
-      item_category: "Apparel",
-      item_category2: "Adult",
-      item_category3: "Shirts",
-      item_category4: "Crew",
-      item_category5: "Short sleeve",
-      item_list_id: "related_products",
-      item_list_name: "Related Products",
-      item_variant: "gray",
-      location_id: "ChIJIQBpAG2ahYAR_6128GcTUEo",
-      price: 20.99,
-      quantity: 1
-    }
+                {
+                    'item_id': "SKU_12346",
+                    'item_name': "Google Grey Women's Tee",
+                    'affiliation': "Google Merchandise Store",
+                    'coupon': "SUMMER_FUN",
+                    'discount': 3.33,
+                    'index': 1,
+                    'item_brand': "Google",
+                    'item_category': "Apparel",
+                    'item_category2': "Adult",
+                    'item_category3': "Shirts",
+                    'item_category4': "Crew",
+                    'item_category5': "Short sleeve",
+                    'item_list_id': "related_products",
+                    'item_list_name': "Related Products",
+                    'item_variant': "gray",
+                    'location_id': "ChIJIQBpAG2ahYAR_6128GcTUEo",
+                    'price': 20.99,
+                    'quantity': 1
+                }
             ]
         });
     }
     </script>
+
     <!-- Google Tag Manager -->
     <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
     new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -51,9 +58,11 @@
     'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
     })(window,document,'script','dataLayer','GTM-PJ5LQNX5');</script>
     <!-- End Google Tag Manager -->
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Simple E-Commerce Site</title>
+
     <style>
         body { font-family: Arial, sans-serif; }
         header, footer { background: #f3f3f3; padding: 20px; text-align: center; }
@@ -61,21 +70,21 @@
         .product img { width: 150px; height: 150px; display: block; margin-bottom: 10px; }
         .add-to-cart { background: #008cba; color: white; padding: 10px 20px; text-decoration: none; cursor: pointer; }
         .checkout-area {
-    text-align: center;
-    margin-top: 20px;
-}
+            text-align: center;
+            margin-top: 20px;
+        }
 
-#checkout-button {
-    background-color: #4CAF50; /* Green */
-    color: white;
-    padding: 15px 32px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    margin: 4px 2px;
-    cursor: pointer;
-}
+        #checkout-button {
+            background-color: #4CAF50; /* Green */
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
@@ -103,8 +112,8 @@
             <button onclick="addToCart('P2')">Add to Cart</button>
         </div>
         <!-- Add more products as needed -->
-        <div class="product">
-            <button onclick="beginCheckout()">Checkout</button>
+        <div class="checkout-area">
+            <button id="checkout-button" onclick="beginCheckout()">Checkout</button>
         </div>
     </main>
 
