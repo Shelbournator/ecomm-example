@@ -1,117 +1,1022 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-GB">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simple E-Commerce Site</title>
-
+    <title>Exquisite Teas & Elegant Cakes</title>
     <style>
-        body { font-family: Arial, sans-serif; }
-        header, footer { background: #f3f3f3; padding: 20px; text-align: center; }
-        .product { display: inline-block; margin: 20px; }
-        .product img { width: 150px; height: 150px; display: block; margin-bottom: 10px; }
-        .add-to-cart { background: #008cba; color: white; padding: 10px 20px; text-decoration: none; cursor: pointer; }
-        .checkout-area {
-            text-align: center;
-            margin-top: 20px;
+        /* Import Google Fonts */
+        @import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
+
+        /* Define Color Palette and Variables */
+        :root {
+            --primary-color: #7D3C3C; /* Elegant Burgundy */
+            --primary-hover: #602f2f; /* Darker Burgundy for hover */
+            --secondary-color: #c5a15a; /* Soft Gold Accent */
+            --background-light: #f9f6f1; /* Warm Off-White */
+            --background-medium: #e8d8c3; /* Light Tan */
+            --background-card: #ffffff; /* White for cards */
+            --text-dark: #4a4a4a; /* Soft Dark Grey */
+            --text-light: #ffffff; /* White */
+            --border-color: #e0d6c7; /* Soft Tan Border */
+            --success-bg: #eaf3ed; /* Lighter Green */
+            --success-text: #2b6b3e; /* Darker Green */
+            --shadow-color: rgba(0, 0, 0, 0.08); /* Softer shadow */
+
+            /* Font Variables */
+            --font-primary: 'Playfair Display', serif;
+            --font-secondary: 'Lato', sans-serif;
         }
 
-        #checkout-button {
-            background-color: #4CAF50; /* Green */
-            color: white;
-            padding: 15px 32px;
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
-            font-size: 16px;
-            margin: 4px 2px;
-            cursor: pointer;
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
         }
+
+        body {
+            background-color: var(--background-light);
+            color: var(--text-dark);
+            line-height: 1.7; /* Slightly more spacing */
+            font-family: var(--font-secondary);
+            font-weight: 400; /* Standard weight for Lato */
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+             font-family: var(--font-primary);
+             font-weight: 700; /* Bold Playfair */
+             color: var(--primary-color); /* Default heading color */
+             margin-bottom: 0.75rem; /* Consistent heading margin */
+        }
+
+        header {
+            background-color: var(--primary-color);
+            color: var(--text-light);
+            padding: 1rem 1.5rem; /* Slightly more padding */
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 4px var(--shadow-color); /* Subtle shadow */
+        }
+
+        .logo {
+            font-family: var(--font-primary);
+            font-size: 1.8rem; /* Slightly larger */
+            font-weight: 700; /* Bold Playfair */
+            color: var(--text-light); /* Ensure it stays white */
+        }
+
+        .cart-icon {
+            position: relative;
+            cursor: pointer;
+            color: var(--text-light); /* Ensure icon matches text */
+            font-size: 1.5rem; /* Make icon slightly larger */
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -12px;
+            background-color: var(--secondary-color); /* Soft Gold */
+            color: var(--text-light); /* White text for contrast on gold */
+            border-radius: 50%;
+            width: 22px;
+            height: 22px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 11px; /* Slightly smaller text */
+            font-weight: 700; /* Bold Lato */
+            font-family: var(--font-secondary); /* Ensure sans-serif */
+            border: 1px solid var(--text-light); /* Optional: subtle border */
+        }
+
+        main {
+            max-width: 1200px;
+            margin: 2.5rem auto; /* More top/bottom margin */
+            padding: 0 1.5rem; /* Consistent padding */
+        }
+
+        .hero {
+            background-color: var(--background-medium);
+            padding: 3rem 2rem; /* More padding */
+            border-radius: 8px;
+            margin-bottom: 3rem; /* More space below hero */
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-family: var(--font-primary);
+            font-size: 3rem; /* Larger heading */
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+        .hero p {
+            font-size: 1.1rem;
+            color: var(--text-dark);
+        }
+
+        .category-title {
+            margin-top: 3rem; /* More space above */
+            margin-bottom: 1.5rem; /* More space below */
+            font-family: var(--font-primary);
+            font-size: 2rem; /* Larger category title */
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 0.5rem;
+            font-weight: 700;
+        }
+
+        .products {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); /* Slightly wider min */
+            gap: 2.5rem; /* More gap */
+        }
+
+        .product {
+            background-color: var(--background-card);
+            border-radius: 8px;
+            box-shadow: 0 4px 12px var(--shadow-color); /* Slightly deeper shadow */
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease; /* Add shadow transition */
+            border: 1px solid var(--border-color);
+        }
+
+        .product:hover {
+            transform: translateY(-6px); /* Slightly more lift */
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12); /* Enhanced shadow on hover */
+        }
+
+        .product-image {
+            height: 220px; /* Slightly taller */
+            background-color: var(--background-light); /* Match body background */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden; /* Ensure image doesn't overflow */
+        }
+
+        .product-image img {
+            max-width: 100%;
+            max-height: 100%;
+            transition: transform 0.4s ease; /* Smooth zoom on image hover */
+        }
+        .product:hover .product-image img {
+             transform: scale(1.05); /* Slight zoom on product hover */
+        }
+
+        .product-info {
+            padding: 1.5rem; /* More padding */
+        }
+
+        .product-title {
+            font-family: var(--font-primary);
+            font-size: 1.4rem; /* Larger product title */
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .product-description {
+            font-style: normal; /* Removing italics for Lato */
+            color: #666; /* Keep slightly lighter grey */
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .product-price {
+            font-weight: 700; /* Bold Lato */
+            color: var(--text-dark);
+            margin-bottom: 1.25rem; /* More space above button */
+            font-size: 1.1rem;
+        }
+
+        button, .button { /* Add generic .button class */
+            background-color: var(--primary-color);
+            color: var(--text-light);
+            border: none;
+            padding: 0.75rem 1.5rem; /* Larger padding */
+            border-radius: 6px; /* Slightly more rounded */
+            cursor: pointer;
+            font-weight: 700; /* Bold Lato */
+            font-family: var(--font-secondary);
+            transition: background-color 0.3s ease, transform 0.2s ease; /* Add transform transition */
+            display: inline-block; /* Ensure button respects padding */
+            text-align: center;
+            font-size: 0.9rem;
+            text-transform: uppercase; /* Optional: Uppercase button text */
+            letter-spacing: 0.5px; /* Optional: Slight letter spacing */
+        }
+
+        button:hover, .button:hover {
+            background-color: var(--primary-hover);
+            transform: translateY(-2px); /* Slight lift on hover */
+        }
+        button:active, .button:active {
+             transform: translateY(0px); /* Reset lift on click */
+        }
+
+        /* Keep checkout button consistent for elegance */
+        .btn-checkout {
+            /* Inherits standard button styles */
+            width: 100%; /* Make checkout button full width in cart/modal */
+            margin-top: 1rem; /* Add space above checkout button */
+        }
+         /* Optional: Style checkout differently if needed */
+        /* .btn-checkout { background-color: var(--secondary-color); color: var(--text-light); } */
+        /* .btn-checkout:hover { background-color: #ab8f4d; } */
+
+
+        /* --- Cart Styles --- */
+        .cart {
+            position: fixed;
+            top: 0;
+            right: -450px; /* Adjust based on new width */
+            width: 450px; /* Wider cart */
+            height: 100vh;
+            background-color: var(--background-card);
+            box-shadow: -3px 0 15px rgba(0,0,0,0.1);
+            padding: 1.5rem; /* More padding */
+            transition: right 0.4s ease; /* Smoother transition */
+            z-index: 1000;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column; /* Allow footer to stick bottom */
+        }
+        .cart.open {
+            right: 0;
+        }
+        .cart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .cart-header h2 {
+             margin-bottom: 0; /* Remove default margin */
+             font-size: 1.6rem;
+        }
+        .close-cart {
+            background: none;
+            color: var(--text-dark);
+            border: none;
+            font-size: 2rem; /* Larger close icon */
+            cursor: pointer;
+            padding: 0; /* Remove padding */
+            line-height: 1; /* Adjust line height */
+            transition: color 0.3s ease;
+        }
+        .close-cart:hover {
+             color: var(--primary-color);
+        }
+        .cart-items {
+            margin-bottom: 1.5rem;
+            flex-grow: 1; /* Allow items to take available space */
+        }
+        .cart-item {
+            display: flex;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+            align-items: center; /* Vertically align items */
+        }
+        .cart-item:last-child {
+             border-bottom: none; /* Remove border on last item */
+             margin-bottom: 0;
+        }
+        .cart-item-image {
+            width: 70px; /* Larger image */
+            height: 70px;
+            background-color: var(--background-light);
+            margin-right: 1.5rem;
+            flex-shrink: 0; /* Prevent image from shrinking */
+            border-radius: 4px; /* Rounded corners for image container */
+            overflow: hidden; /* Clip image */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .cart-item-image img {
+             max-width: 100%;
+             max-height: 100%;
+        }
+        .cart-item-details {
+            flex-grow: 1;
+        }
+        .cart-item-details h4 {
+            font-family: var(--font-primary);
+            font-size: 1.1rem;
+            margin-bottom: 0.25rem;
+            font-weight: 700;
+            color: var(--text-dark); /* Use dark text, not primary */
+        }
+        .cart-item-details p { /* Style for price */
+             color: var(--text-dark);
+             font-weight: 700;
+             margin-bottom: 0.5rem;
+        }
+        .cart-item-quantity {
+            display: flex;
+            align-items: center;
+            margin-top: 0.5rem;
+        }
+        .quantity-btn {
+            width: 28px;
+            height: 28px;
+            background-color: var(--background-light);
+            border: 1px solid var(--border-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            color: var(--text-dark);
+            border-radius: 4px;
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+        }
+        .quantity-btn:hover {
+            background-color: var(--border-color);
+            border-color: #ccc;
+        }
+        .quantity-btn span {
+            font-size: 1rem;
+            line-height: 1;
+        }
+        .cart-item-quantity span { /* Style for the quantity number */
+             margin: 0 10px;
+             font-weight: 700;
+             min-width: 20px; /* Ensure space for number */
+             text-align: center;
+        }
+        .remove-item {
+            background: none;
+            border: none;
+            color: var(--primary-color);
+            cursor: pointer;
+            margin-left: auto; /* Push remove button to the right */
+            font-size: 0.85rem;
+            text-decoration: underline;
+            padding: 5px; /* Easier click target */
+            transition: color 0.3s ease;
+        }
+        .remove-item:hover {
+             color: var(--primary-hover);
+        }
+
+        .cart-summary {
+            margin-top: auto; /* Push summary to bottom */
+            padding-top: 1.5rem;
+            border-top: 2px solid var(--primary-color); /* Stronger top border */
+            background-color: var(--background-card); /* Ensure background */
+        }
+        .cart-total {
+            display: flex;
+            justify-content: space-between;
+            font-weight: 700; /* Bold Lato */
+            margin-bottom: 1rem;
+            font-size: 1.2rem; /* Larger total */
+        }
+        .cart-total span:first-child {
+             font-family: var(--font-primary); /* Use primary font for "Total:" */
+             font-weight: 700;
+        }
+
+
+        /* --- Overlay and Modal Styles --- */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6); /* Darker overlay */
+            display: none;
+            z-index: 999;
+            opacity: 0; /* Start hidden */
+            transition: opacity 0.4s ease;
+        }
+        .overlay.active {
+            display: block;
+            opacity: 1; /* Fade in */
+        }
+
+        .checkout-modal {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.95); /* Start slightly smaller */
+            background-color: var(--background-card);
+            padding: 2.5rem; /* More padding */
+            border-radius: 8px;
+            width: 90%;
+            max-width: 650px; /* Wider modal */
+            z-index: 1001;
+            display: none;
+            opacity: 0; /* Start hidden */
+            transition: opacity 0.4s ease, transform 0.4s ease;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+        .checkout-modal.active {
+            display: block;
+            opacity: 1;
+             transform: translate(-50%, -50%) scale(1); /* Scale in */
+        }
+
+        .checkout-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+             padding-bottom: 1rem; /* Add padding */
+            border-bottom: 1px solid var(--border-color); /* Add border */
+        }
+         .checkout-header h2 {
+             margin-bottom: 0; /* Remove default margin */
+             font-size: 1.8rem; /* Larger modal title */
+        }
+
+        .checkout-form {
+            display: grid;
+            gap: 1.25rem; /* More gap */
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+        .form-group label {
+            margin-bottom: 0.5rem;
+            font-weight: 700; /* Bold Lato */
+            font-size: 0.9rem;
+            color: var(--text-dark);
+        }
+        .form-group input, .form-group select {
+            padding: 0.75rem; /* More padding */
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-family: var(--font-secondary); /* Ensure correct font */
+            font-size: 1rem;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        .form-group input:focus, .form-group select:focus {
+             outline: none;
+             border-color: var(--primary-color);
+             box-shadow: 0 0 0 2px rgba(125, 60, 60, 0.2); /* Subtle focus ring */
+        }
+
+        .order-summary {
+            margin-top: 2rem; /* More space above */
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border-color);
+        }
+         .order-summary h3 {
+             font-size: 1.3rem;
+             margin-bottom: 1rem;
+        }
+        .order-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.75rem; /* More space */
+            font-size: 0.95rem;
+        }
+         .order-item:last-of-type { /* Target the total row */
+             font-weight: 700; /* Bold Lato */
+             font-size: 1.1rem;
+             margin-top: 1rem; /* Space before total */
+             padding-top: 0.5rem; /* Space within total */
+             border-top: 1px dashed var(--border-color); /* Separator */
+        }
+
+        .success-message {
+            background-color: var(--success-bg);
+            color: var(--success-text);
+            padding: 2rem; /* More padding */
+            border-radius: 6px;
+            margin-bottom: 1rem;
+            display: none; /* Keep hidden initially */
+            text-align: center;
+            border: 1px solid var(--success-text);
+        }
+         .success-message h3 {
+            color: var(--success-text); /* Ensure heading color matches */
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .success-message.active {
+            display: block; /* Show when active */
+        }
+
     </style>
 </head>
 <body>
-    <!-- Google Tag Manager (noscript) -->
-    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PJ5LQNX5"
-    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-    <!-- End Google Tag Manager (noscript) -->
-
     <header>
-        <h1>My E-Commerce Site</h1>
-        <nav>
-            <a href="#">Home</a> | <a href="#">Products</a> | <a href="#">Contact</a>
-        </nav>
+        <div class="logo">Splendid Teas & Cakes</div>
+        <div class="cart-icon" id="cartIcon">
+            🛒 <span class="cart-count" id="cartCount">0</span>
+        </div>
     </header>
 
     <main>
-        <div class="product">
-            <img src="https://via.placeholder.com/150" alt="Product 1">
-            <h2>Product 1</h2>
-            <button onclick="addToCart('P1')">Add to Cart</button>
-        </div>
-        <div class="product">
-            <img src="https://via.placeholder.com/150" alt="Product 2">
-            <h2>Product 2</h2>
-            <button onclick="addToCart('P2')">Add to Cart</button>
-        </div>
-        <!-- Add more products as needed -->
-        <div class="checkout-area">
-            <button id="checkout-button" onclick="beginCheckout()">Checkout</button>
+<div class="hero">
+    <h1>Exquisite Teas & Elegant Cakes</h1>
+    <p>Brewing delight since 1884 — A timeless British tradition!</p>
+</div>
+        
+        <h2 class="category-title">Our Splendid Selection</h2>
+        <div class="products" id="products">
+            <!-- Products will be loaded dynamically -->
         </div>
     </main>
 
-    <footer>
-        <p>&copy; 2024 My E-Commerce Site</p>
-    </footer>
+    <div class="cart" id="cart">
+        <div class="cart-header">
+            <h2>Your Shopping Basket</h2>
+            <button class="close-cart" id="closeCart">×</button>
+        </div>
+        <div class="cart-items" id="cartItems">
+            <!-- Cart items will be added here -->
+        </div>
+        <div class="cart-summary">
+            <div class="cart-total">
+                <span>Total:</span>
+                <span id="cartTotal">£0.00</span>
+            </div>
+            <button class="btn-checkout" id="checkoutBtn">Proceed to Checkout</button>
+        </div>
+    </div>
+
+    <div class="overlay" id="overlay"></div>
+
+    <div class="checkout-modal" id="checkoutModal">
+        <div class="checkout-header">
+            <h2>Checkout</h2>
+            <button class="close-cart" id="closeCheckout">×</button>
+        </div>
+        <div class="success-message" id="successMessage">
+            <h3>Jolly good show!</h3>
+            <p>Your order has been placed successfully! The kettle's on, and your tea and treats will be with you shortly.</p>
+        </div>
+        <form id="checkoutForm" class="checkout-form">
+            <div class="form-group">
+                <label for="name">Full Name</label>
+                <input type="text" id="name" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" required>
+            </div>
+            <div class="form-group">
+                <label for="address">Address</label>
+                <input type="text" id="address" required>
+            </div>
+            <div class="form-group">
+                <label for="city">City</label>
+                <input type="text" id="city" required>
+            </div>
+            <div class="form-group">
+                <label for="postcode">Postcode</label>
+                <input type="text" id="postcode" required>
+            </div>
+            <div class="form-group">
+                <label for="payment">Payment Method</label>
+                <select id="payment">
+                    <option value="card">Debit/Credit Card</option>
+                    <option value="paypal">PayPal</option>
+                </select>
+            </div>
+            <div class="order-summary">
+                <h3>Order Summary</h3>
+                <div id="orderItems">
+                    <!-- Order items will be added here -->
+                </div>
+                <div class="order-item">
+                    <strong>Total:</strong>
+                    <span id="orderTotal">£0.00</span>
+                </div>
+            </div>
+            <button type="submit" class="btn-checkout">Complete Order</button>
+        </form>
+    </div>
 
     <script>
+        // Sample product data
+        const products = [
+            {
+                id: 1,
+                name: 'Earl Grey Tea',
+                price: 4.99,
+                image: '/api/placeholder/250/200',
+                description: 'A classic British blend with bergamot. Perfect for your afternoon tea ritual.'
+            },
+            {
+                id: 2,
+                name: 'Victoria Sponge Cake',
+                price: 6.75,
+                image: '/api/placeholder/250/200',
+                description: 'Named after Queen Victoria herself. Jam and buttercream sandwiched between light vanilla sponge.'
+            },
+            {
+                id: 3,
+                name: 'Yorkshire Tea Bags (80)',
+                price: 3.50,
+                image: '/api/placeholder/250/200',
+                description: 'A proper brew. Strong enough to handle a splash of milk.'
+            },
+            {
+                id: 4,
+                name: 'Battenberg Cake',
+                price: 5.25,
+                image: '/api/placeholder/250/200',
+                description: 'Pink and yellow checkered sponge wrapped in marzipan. As British as queuing politely.'
+            },
+            {
+                id: 5,
+                name: 'English Breakfast Tea',
+                price: 4.25,
+                image: '/api/placeholder/250/200',
+                description: 'A robust blend to start your day right. Goes splendidly with a full English.'
+            },
+            {
+                id: 6,
+                name: 'Scones (4-pack)',
+                price: 3.99,
+                image: '/api/placeholder/250/200',
+                description: 'Freshly baked scones. Add jam and clotted cream for the full experience. (Warning: may cause debates about which goes first).'
+            },
+            {
+                id: 7,
+                name: 'Eccles Cakes (2-pack)',
+                price: 3.75,
+                image: '/api/placeholder/250/200',
+                description: 'Flaky pastry filled with currants. A Lancashire delicacy since 1793.'
+            },
+            {
+                id: 8,
+                name: 'Assam Tea',
+                price: 5.50,
+                image: '/api/placeholder/250/200',
+                description: 'A malty, full-bodied tea from India. The backbone of many British tea blends.'
+            }
+        ];
+
+        // Initialize dataLayer for GA4
         window.dataLayer = window.dataLayer || [];
 
-        // Function to track add_to_cart event
-        function addToCart(productId) {
-            console.log("Adding to cart:", productId); // This line is for debugging purposes
-            window.dataLayer.push({
-                'event': 'add_to_cart',
-                'items': [
-                    {
-                        'product_id': productId
-                    }
-                ]
+        // Cart data
+        let cart = [];
+
+        // DOM elements
+        const productsContainer = document.getElementById('products');
+        const cartIcon = document.getElementById('cartIcon');
+        const cartContainer = document.getElementById('cart');
+        const closeCart = document.getElementById('closeCart');
+        const cartItems = document.getElementById('cartItems');
+        const cartCount = document.getElementById('cartCount');
+        const cartTotal = document.getElementById('cartTotal');
+        const checkoutBtn = document.getElementById('checkoutBtn');
+        const overlay = document.getElementById('overlay');
+        const checkoutModal = document.getElementById('checkoutModal');
+        const closeCheckout = document.getElementById('closeCheckout');
+        const checkoutForm = document.getElementById('checkoutForm');
+        const orderItems = document.getElementById('orderItems');
+        const orderTotal = document.getElementById('orderTotal');
+        const successMessage = document.getElementById('successMessage');
+
+        // Load products
+        function loadProducts() {
+            products.forEach(product => {
+                const productElement = document.createElement('div');
+                productElement.className = 'product';
+                productElement.innerHTML = `
+                    <div class="product-image">
+                        <img src="${product.image}" alt="${product.name}">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">${product.name}</h3>
+                        <p class="product-description">${product.description}</p>
+                        <p class="product-price">£${product.price.toFixed(2)}</p>
+                        <button class="add-to-cart" data-id="${product.id}">Add to Basket</button>
+                    </div>
+                `;
+                productsContainer.appendChild(productElement);
+            });
+
+            // Add event listeners to add-to-cart buttons
+            const addToCartButtons = document.querySelectorAll('.add-to-cart');
+            addToCartButtons.forEach(button => {
+                button.addEventListener('click', addToCart);
             });
         }
 
-        // Function to track begin_checkout event
-        function beginCheckout() {
-            console.log("Begin checkout"); // This line is for debugging purposes
-            window.dataLayer.push({
-                'event': 'begin_checkout',
-                'currency' : "USD",
-                'value' : 7.77,
-                'coupon' : "SUMMER_FUN",
-                'items' : [
-                    {
-                        'item_id': "SKU_12346",
-                        'item_name': "Google Grey Women's Tee",
-                        'affiliation': "Google Merchandise Store",
-                        'coupon': "SUMMER_FUN",
-                        'discount': 3.33,
-                        'index': 1,
-                        'item_brand': "Google",
-                        'item_category': "Apparel",
-                        'item_category2': "Adult",
-                        'item_category3': "Shirts",
-                        'item_category4': "Crew",
-                        'item_category5': "Short sleeve",
-                        'item_list_id': "related_products",
-                        'item_list_name': "Related Products",
-                        'item_variant': "gray",
-                        'location_id': "ChIJIQBpAG2ahYAR_6128GcTUEo",
-                        'price': 20.99,
-                        'quantity': 1
-                    }
-                ]
-            });
+        // Add item to cart
+        function addToCart(event) {
+            const productId = parseInt(event.target.getAttribute('data-id'));
+            const product = products.find(p => p.id === productId);
+            
+            if (product) {
+                const existingItem = cart.find(item => item.id === productId);
+                
+                if (existingItem) {
+                    existingItem.quantity += 1;
+                } else {
+                    cart.push({
+                        id: product.id,
+                        name: product.name,
+                        price: product.price,
+                        image: product.image,
+                        quantity: 1
+                    });
+                }
+                
+                updateCart();
+                pushAddToCartEvent(product);
+            }
         }
+
+        // Update cart display
+        function updateCart() {
+            cartItems.innerHTML = '';
+            
+            if (cart.length === 0) {
+                cartItems.innerHTML = '<p>Your basket is empty. Fancy a cuppa?</p>';
+            } else {
+                cart.forEach(item => {
+                    const cartItem = document.createElement('div');
+                    cartItem.className = 'cart-item';
+                    cartItem.innerHTML = `
+                        <div class="cart-item-image">
+                            <img src="${item.image}" alt="${item.name}" style="max-width: 100%; max-height: 100%;">
+                        </div>
+                        <div class="cart-item-details">
+                            <h4>${item.name}</h4>
+                            <p>£${item.price.toFixed(2)}</p>
+                            <div class="cart-item-quantity">
+                                <button class="quantity-btn decrease" data-id="${item.id}">-</button>
+                                <span style="margin: 0 10px;">${item.quantity}</span>
+                                <button class="quantity-btn increase" data-id="${item.id}">+</button>
+                                <button class="remove-item" data-id="${item.id}" style="margin-left: 10px;">Remove</button>
+                            </div>
+                        </div>
+                    `;
+                    cartItems.appendChild(cartItem);
+                });
+
+                // Add event listeners to quantity buttons
+                const decreaseButtons = document.querySelectorAll('.decrease');
+                const increaseButtons = document.querySelectorAll('.increase');
+                const removeButtons = document.querySelectorAll('.remove-item');
+                
+                decreaseButtons.forEach(button => {
+                    button.addEventListener('click', decreaseQuantity);
+                });
+                
+                increaseButtons.forEach(button => {
+                    button.addEventListener('click', increaseQuantity);
+                });
+                
+                removeButtons.forEach(button => {
+                    button.addEventListener('click', removeItem);
+                });
+            }
+            
+            updateCartCount();
+            updateCartTotal();
+        }
+
+        // Decrease item quantity
+        function decreaseQuantity(event) {
+            const productId = parseInt(event.target.getAttribute('data-id'));
+            const item = cart.find(item => item.id === productId);
+            
+            if (item) {
+                if (item.quantity > 1) {
+                    item.quantity -= 1;
+                } else {
+                    cart = cart.filter(item => item.id !== productId);
+                }
+                updateCart();
+                pushRemoveFromCartEvent(productId, 1);
+            }
+        }
+
+        // Increase item quantity
+        function increaseQuantity(event) {
+            const productId = parseInt(event.target.getAttribute('data-id'));
+            const item = cart.find(item => item.id === productId);
+            const product = products.find(p => p.id === productId);
+            
+            if (item) {
+                item.quantity += 1;
+                updateCart();
+                pushAddToCartEvent(product);
+            }
+        }
+
+        // Remove item from cart
+        function removeItem(event) {
+            const productId = parseInt(event.target.getAttribute('data-id'));
+            const item = cart.find(item => item.id === productId);
+            
+            if (item) {
+                const quantity = item.quantity;
+                cart = cart.filter(item => item.id !== productId);
+                updateCart();
+                pushRemoveFromCartEvent(productId, quantity);
+            }
+        }
+
+        // Update cart count
+        function updateCartCount() {
+            const count = cart.reduce((total, item) => total + item.quantity, 0);
+            cartCount.textContent = count;
+        }
+
+        // Update cart total
+        function updateCartTotal() {
+            const total = cart.reduce((total, item) => total + (item.price * item.quantity), 0);
+            cartTotal.textContent = `£${total.toFixed(2)}`;
+            orderTotal.textContent = `£${total.toFixed(2)}`;
+        }
+
+        // Open cart
+        function openCart() {
+            cartContainer.classList.add('open');
+            overlay.classList.add('active');
+        }
+
+        // Close cart
+        function closeCartFunction() {
+            cartContainer.classList.remove('open');
+            overlay.classList.remove('active');
+        }
+
+        // Open checkout modal
+        function openCheckoutModal() {
+            if (cart.length === 0) {
+                alert('Your basket is empty! How about a nice cup of tea first?');
+                return;
+            }
+            
+            checkoutModal.classList.add('active');
+            overlay.classList.add('active');
+            cartContainer.classList.remove('open');
+            
+            // Update order items
+            orderItems.innerHTML = '';
+            cart.forEach(item => {
+                const orderItem = document.createElement('div');
+                orderItem.className = 'order-item';
+                orderItem.innerHTML = `
+                    <span>${item.name} x ${item.quantity}</span>
+                    <span>£${(item.price * item.quantity).toFixed(2)}</span>
+                `;
+                orderItems.appendChild(orderItem);
+            });
+            
+            pushBeginCheckoutEvent();
+        }
+
+        // Close checkout modal
+        function closeCheckoutModal() {
+            checkoutModal.classList.remove('active');
+            overlay.classList.remove('active');
+            successMessage.classList.remove('active');
+        }
+
+        // Handle checkout form submission
+        function handleCheckout(event) {
+            event.preventDefault();
+            
+            // Gather form data
+            const formData = {
+                name: document.getElementById('name').value,
+                email: document.getElementById('email').value,
+                address: document.getElementById('address').value,
+                city: document.getElementById('city').value,
+                postcode: document.getElementById('postcode').value,
+                payment: document.getElementById('payment').value
+            };
+            
+            // Process order (in a real app, this would send data to a server)
+            console.log('Order placed:', formData);
+            console.log('Order items:', cart);
+            
+            // Show success message
+            successMessage.classList.add('active');
+            checkoutForm.style.display = 'none';
+            
+            // Clear cart
+            const items = [...cart];
+            cart = [];
+            updateCart();
+            
+            pushPurchaseEvent(items, formData);
+            
+            // Reset form after 3 seconds and close modal
+            setTimeout(() => {
+                checkoutForm.reset();
+                checkoutForm.style.display = 'block';
+                successMessage.classList.remove('active');
+                closeCheckoutModal();
+            }, 3000);
+        }
+
+        // GA4 Event tracking functions
+        function pushAddToCartEvent(product) {
+            window.dataLayer.push({
+                event: 'add_to_cart',
+                ecommerce: {
+                    currency: 'GBP',
+                    items: [{
+                        item_id: product.id,
+                        item_name: product.name,
+                        price: product.price,
+                        quantity: 1
+                    }]
+                }
+            });
+            console.log('GA4 Event: add_to_cart', product);
+        }
+        
+        function pushRemoveFromCartEvent(productId, quantity) {
+            const product = products.find(p => p.id === productId);
+            if (product) {
+                window.dataLayer.push({
+                    event: 'remove_from_cart',
+                    ecommerce: {
+                        currency: 'GBP',
+                        items: [{
+                            item_id: product.id,
+                            item_name: product.name,
+                            price: product.price,
+                            quantity: quantity
+                        }]
+                    }
+                });
+                console.log('GA4 Event: remove_from_cart', product);
+            }
+        }
+        
+        function pushBeginCheckoutEvent() {
+            window.dataLayer.push({
+                event: 'begin_checkout',
+                ecommerce: {
+                    currency: 'GBP',
+                    items: cart.map(item => ({
+                        item_id: item.id,
+                        item_name: item.name,
+                        price: item.price,
+                        quantity: item.quantity
+                    }))
+                }
+            });
+            console.log('GA4 Event: begin_checkout', cart);
+        }
+        
+        function pushPurchaseEvent(items, formData) {
+            const total = items.reduce((total, item) => total + (item.price * item.quantity), 0);
+            const transaction_id = 'T-' + Date.now();
+            
+            window.dataLayer.push({
+                event: 'purchase',
+                ecommerce: {
+                    transaction_id: transaction_id,
+                    value: total,
+                    currency: 'GBP',
+                    items: items.map(item => ({
+                        item_id: item.id,
+                        item_name: item.name,
+                        price: item.price,
+                        quantity: item.quantity
+                    }))
+                },
+                customer_info: {
+                    name: formData.name,
+                    email: formData.email,
+                    address: formData.address,
+                    city: formData.city,
+                    postcode: formData.postcode,
+                    payment_method: formData.payment
+                }
+            });
+            console.log('GA4 Event: purchase', {items, formData, transaction_id, total});
+        }
+
+        // Event listeners
+        cartIcon.addEventListener('click', openCart);
+        closeCart.addEventListener('click', closeCartFunction);
+        overlay.addEventListener('click', () => {
+            closeCartFunction();
+            closeCheckoutModal();
+        });
+        checkoutBtn.addEventListener('click', openCheckoutModal);
+        closeCheckout.addEventListener('click', closeCheckoutModal);
+        checkoutForm.addEventListener('submit', handleCheckout);
+
+        // Load products when the page loads
+        document.addEventListener('DOMContentLoaded', loadProducts);
     </script>
-
 </body>
 </html>
